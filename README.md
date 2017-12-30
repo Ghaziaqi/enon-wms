@@ -3,8 +3,10 @@
 ##仓库管理系统beta版
 
 qq群：484043598
+<div  align="center">    
+  <img src="./demo/QQ图片20171230143517.jpg" width = "300" alt="图片名称" align=center />
+</div>
 
-![1](./demo/QQ图片20171230143517.jpg)
 
 ## 演示
 
