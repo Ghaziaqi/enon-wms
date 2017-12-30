@@ -4,7 +4,7 @@
 
 qq群：484043598
 <div  align="center">    
-  <img src="./demo/QQ图片20171230143517.jpg" width = "300" alt="图片名称" align=center />
+  <img src="./demo/QQ图片20171230143517.jpg" width = "400" alt="图片名称" align=center />
 </div>
 
 
