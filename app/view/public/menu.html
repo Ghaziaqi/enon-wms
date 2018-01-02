@@ -2,17 +2,10 @@
 					<!-- add class "multiple-expanded" to allow multiple submenus to open -->
 					<!-- class "auto-inherit-active-class" will automatically add "active" class for parent elements who are marked already with class "active" -->
 					<li>
-						<a href="dashboard-1.html">
+						<a href="{:url('Index/index')}">
 							<i class="linecons-cog"></i>
 							<span class="title">控制台</span>
 						</a>
-						<ul>
-							<li>
-								<a href="">
-									<span class="title">控制台 1</span>
-								</a>
-							</li>
-						</ul>
 					</li>
 					<li >
 						<a href="layout-variants.html">
@@ -43,6 +36,9 @@
 							</li>
 							<li>
 								<a href="{:url('Outstorage/index')}"><span class="title">出库管理</span></a>
+							</li>
+							<li>
+								<a href="{:url('Product/lists')}"><span class="title">库存查询</span></a>
 							</li>
 <!-- 							<li>
 								<a href="{:url('Storage/index')}"><span class="title">报损管理</span></a>

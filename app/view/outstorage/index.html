@@ -79,8 +79,8 @@
 
                         <form class="form-inline" style="margin-bottom:15px;" class="search-tool">
                             <span>
-                                <label class="control-label">出库名称</label>   
-                                <input type="text" class="form-control" placeholder="出库名称" name="name" value="{$Request.get.name}"> 
+                                <label class="control-label">制单者</label>   
+                                <input type="text" class="form-control" placeholder="制单者" name="author" value="{$Request.get.author}"> 
                             </span>
                             
                             <span style="margin-left: 15px;">
@@ -89,17 +89,17 @@
                             </span>
 
                             <span style="margin-left: 15px;">
-                                <label class="control-label">出库状态</label>
-                                <select class="form-control" name="status">
+                                <label class="control-label">出库类型</label>
+                                <select class="form-control" name="type">
                                     <option value="" 
-                                        {eq name="Request.get.status" value=" "} selected="selected" {/eq}
-                                    >全部</option>
-                                    <option value="0" 
-                                        {eq name="Request.get.status" value="0"} selected="selected" {/eq}
-                                    >正常</option>
-                                    <option value="1" 
-                                        {eq name="Request.get.status" value="1"} selected="selected" {/eq}
-                                    >废弃</option>
+                                        {eq name="Request.get.type" value=" "} selected="selected" {/eq}
+                                    >全部类型</option>
+                                    <option value="采购出库" 
+                                        {eq name="Request.get.type" value="采购出库"} selected="selected" {/eq}
+                                    >采购出库</option>
+                                    <option value="销售退货" 
+                                        {eq name="Request.get.type" value="销售退货"} selected="selected" {/eq}
+                                    >销售退货</option>
                                 </select>   
                             </span>
 

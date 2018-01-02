@@ -17,6 +17,13 @@ class Product extends Base
         return view();
     }
 
+    public function lists()
+    {
+        $this->index();
+        return view();
+    }
+
+
     public function create()
     {
         $this->assign( $this->service->_init() );
