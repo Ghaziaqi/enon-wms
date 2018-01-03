@@ -10,10 +10,8 @@ Target Server Type    : MYSQL
 Target Server Version : 50553
 File Encoding         : 65001
 
-Date: 2018-01-03 13:01:35
+Date: 2018-01-03 15:02:50
 */
-SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
-SET time_zone = "+00:00";
 
 SET FOREIGN_KEY_CHECKS=0;
 
@@ -86,6 +84,43 @@ CREATE TABLE `w_location` (
 -- ----------------------------
 INSERT INTO `w_location` VALUES ('1', '17122705595244343', 'B区', '1', '0', '', '1514368943');
 INSERT INTO `w_location` VALUES ('2', '17122706022839995', 'A区', '3', '0', '', '1514368959');
+
+-- ----------------------------
+-- Table structure for w_menu
+-- ----------------------------
+DROP TABLE IF EXISTS `w_menu`;
+CREATE TABLE `w_menu` (
+  `id` mediumint(9) unsigned NOT NULL AUTO_INCREMENT,
+  `pid` mediumint(9) unsigned DEFAULT '0',
+  `name` varchar(40) DEFAULT NULL,
+  `ico` varchar(20) DEFAULT NULL,
+  `level` tinyint(1) unsigned DEFAULT '0',
+  `controller` varchar(20) DEFAULT NULL,
+  `action` varchar(20) DEFAULT NULL,
+  `status` tinyint(1) unsigned DEFAULT '0',
+  `add_time` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=MyISAM AUTO_INCREMENT=16 DEFAULT CHARSET=utf8 COMMENT='菜单';
+
+-- ----------------------------
+-- Records of w_menu
+-- ----------------------------
+INSERT INTO `w_menu` VALUES ('1', '0', '控制台', 'linecons-cog', '0', 'Index', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('2', '0', '系统设置', 'linecons-desktop', '0', '', null, '0', null);
+INSERT INTO `w_menu` VALUES ('3', '2', '员工管理', null, '1', 'User', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('4', '0', '仓库作业', 'linecons-note', '0', null, null, '0', null);
+INSERT INTO `w_menu` VALUES ('5', '4', '入库管理', null, '1', 'Instorage', 'index', '0', '5');
+INSERT INTO `w_menu` VALUES ('6', '4', '出门管理', null, '1', 'Outstorage', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('7', '4', '查询管理', null, '1', 'Product', 'lists', '0', null);
+INSERT INTO `w_menu` VALUES ('8', '0', '基本设置', 'linecons-cog', '0', null, null, '0', null);
+INSERT INTO `w_menu` VALUES ('9', '8', '仓库管理', null, '1', 'Storage', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('10', '8', '库位管理', null, '1', 'Location', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('11', '8', '供应商管理', null, '1', 'Supplier', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('12', '8', '客户管理', null, '1', 'Customer', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('13', '8', '计量单位', null, '1', 'Unit', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('14', '8', '产品类别', null, '1', 'Category', 'index', '0', null);
+INSERT INTO `w_menu` VALUES ('15', '8', '产品管理', null, '1', 'Product', 'index', '0', null);
 
 -- ----------------------------
 -- Table structure for w_order
