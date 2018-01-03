@@ -2,9 +2,14 @@
 
 ## 仓库管理系统beta版
 
-# 安装
+#安装
 	
 	localhost/install.php
+
+#安装框架核心 vendor
+
+	composer install
+
 
 qq群：484043598
 <div  align="center">    
