@@ -11,6 +11,13 @@
     <script src="__STATIC__/js/datatables/yadcf/jquery.dataTables.yadcf.js"></script>
     <script src="__STATIC__/js/datatables/tabletools/dataTables.tableTools.min.js"></script>
 
+
+    <script src="__STATIC__/js/table-export/xlsx.core.min.js"></script>
+    <script src="__STATIC__/js/table-export/blob.js"></script>
+    <script src="__STATIC__/js/table-export/FileSaver.min.js"></script>
+    <script src="__STATIC__/js/table-export/tableexport.js"></script>
+
+
 <div class="page-title">  
     
     <div class="breadcrumb-env pull-left">
@@ -67,7 +74,7 @@
                                 <label for="toggle-id916bcee584545-col-1">用户名</label>
                             </li>
                         </ul>
-                        <button class="btn btn-default">导出</button>
+                        <button class="btn btn-default" onClick ="$('.table').tableExport({formats:['xlsx','xls','csv','txt']})">导出</button>
                     </div>                    
 
                 </div>
