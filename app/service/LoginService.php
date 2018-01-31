@@ -31,6 +31,7 @@ class LoginService
     		];	
     	}else{
             Session::set('uid',$user->id,'think');
+            Session::set('company',$user->company,'think');
     		return [
     			'error'	=>	0,
     			'msg'	=>	'登录成功'
@@ -42,6 +43,7 @@ class LoginService
     //注销
     public function quit(){
         Session::delete('uid','think');
+        Session::delete('company','think');
     }    
 
 

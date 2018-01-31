@@ -24,7 +24,7 @@ class Location extends Base
     public function create()
     {
         $this->assign([
-            'storage'  =>  Storage::get([ 'status' =>  0 ])
+            'storage'  =>  Storage::all()
         ]);
 
         return view();

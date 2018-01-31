@@ -57,7 +57,7 @@
 
                     <div class="btn-group dropdown-btn-group pull-right">
                         
-                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">过滤某列数据
+<!--                         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">过滤某列数据
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -71,7 +71,7 @@
                                 </div>
                                 <label for="toggle-id916bcee584545-col-1">用户名</label>
                             </li>
-                        </ul>
+                        </ul> -->
                         <button class="btn btn-default" onClick ="$('.table').tableExport({formats:['xlsx','xls','csv','txt']})">导出</button>
                     </div>                    
 
@@ -130,7 +130,7 @@
                             dom: "t" + "<'row'<'col-xs-6'i><'col-xs-6'p>>",
                             dom: "t" + "<'row'<'col-xs-6'><'col-xs-6'>>",
                             aoColumns: [
-                                {bSortable: false},
+                                // {bSortable: false},
                                 null,
                                 null,
                                 null,
@@ -170,9 +170,9 @@
                     <table class="table table-bordered table-striped" id="example-2">
                         <thead>
                             <tr>
-                                <th class="no-sorting">
+<!--                                 <th class="no-sorting">
                                     <input type="checkbox" class="cbr">
-                                </th>
+                                </th> -->
                                 <th>ID</th>
                                 <th>单位名称</th>
                                 <th>状态</th>
@@ -185,9 +185,9 @@
                         
                         {volist name='list' id='user'}
                             <tr>
-                                <td>
+<!--                                 <td>
                                     <input type="checkbox" class="cbr">
-                                </td>
+                                </td> -->
                                 <td> {$user.id} </td>
                                 <td> {$user.name} </td>
                                 <td> {$user.status==0?'正常':'废弃'} </td>
@@ -215,7 +215,7 @@
                             <div class="dataTables_info" id="example-3_info" role="status" aria-live="polite"> 共{:count( $list ) } 行数据</div></div>
                         <div class="col-xs-6">
                             <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
-
+                                {$list->render()}
                             </div>
                         </div>
                     </div>                  

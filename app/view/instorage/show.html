@@ -51,23 +51,20 @@
             </tr>
         </thead>
         <tbody>
-        <?php 
-            $lists = json_decode($info->res);
-        ?>
 
-             <?php foreach( $lists as  $v ): ?>
+             {volist name='list' id='vo'}
 
                 <tr role="row" class="odd">
                     <td>
-                         <input type="text" class="form-control" value="{$v[0]}" disabled="disabled"> 
+                         <input type="text" class="form-control" value="{$vo.findGood.sn}" disabled="disabled"> 
                     </td>
                     <td> 
-                        <input type="text" class="form-control" value="{$v[1]}" disabled="disabled"> 
+                        <input type="text" class="form-control" value="{$vo.findGood.name}" disabled="disabled"> 
                     </td>
-                    <td><input type="text" class="form-control" value="{$v[2]}" disabled="disabled"></td>
+                    <td><input type="text" class="form-control" value="{$vo.num}" disabled="disabled"></td>
 
                 </tr>
-             <?php endforeach; ?>
+             {/volist}
         </tbody>
     </table>
 

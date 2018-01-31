@@ -3,6 +3,7 @@ namespace app\service;
 use think\Request,
 	app\model\Unit,
 	app\model\Product,
+	app\model\Productup,
 	app\model\Storage,
 	app\model\Category,
 	app\model\Customer,
@@ -13,7 +14,6 @@ use think\Request,
 class ProductService{
 
     public function page(){
-
     	$data 	= Request::instance()->get();
     	$where 	= [];
 
@@ -71,7 +71,16 @@ class ProductService{
 			$product->add_time 	= time();
 
 			// 检测错误
-			if( $product->save() ){
+			if( $gid = $product->save() ){
+
+				$productup 				= new Productup();
+				$productup->gid 		= $product->id;
+				$productup->storage 	= $param['storage'];
+				$productup->location 	= $param['location'];
+				$productup->desc 		= $param['desc'];
+				$productup->add_time 	= time();
+				$productup->save();
+
 				return ['error'	=>	0,'msg'	=>	'保存成功'];
 			}else{
 				return ['error'	=>	100,'msg'	=>	'保存失败'];	
@@ -128,6 +137,9 @@ class ProductService{
 
     public function delete($id){
     	if( Product::destroy($id) ){
+    		Productup::destroy([
+    			'gid' => $id
+    		]);
     		return ['error'	=>	0,'msg'	=>	'删除成功'];
     	}else{
     		return ['error'	=>	100,'msg'	=>	'删除失败'];	

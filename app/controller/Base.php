@@ -12,18 +12,11 @@ class Base extends Controller
     	if( !Session::get('uid','think') ){
             return $this->redirect("Login/index"); 
         }
+        $user_info = User::get(['id' => Session::get('uid','think') ]);
+
         $service = new MenuService();
-
-        $_menuList['father'] = $service->getFather();
-        $_menuList['child'] = $service->getChild();
-
-
-        $this->assign([
-        	'my_info'	=>	User::get(['id' => Session::get('uid','think') ]),
-            '_menuList' =>   $_menuList
-        ]);
+        $this->assign( $service->getMenuShow($user_info) );
 
     }
     
-
 }

@@ -3,6 +3,7 @@ namespace app\service;
 use think\Request,
 	app\model\Order,
 	app\model\Product,
+	app\model\OrderList,
 	app\validate\OrderValidate;
 
 class InstorageService
@@ -37,32 +38,18 @@ class InstorageService
 			$order->desc 		= $param['desc'];
 			$order->author 		= $param['author'];
 			$order->supplier 	= $param['supplier'];
+			$order->car_no 		= $param['car_no'];
+			$order->ban_no 		= $param['ban_no'];
+			$order->detailed_no = $param['detailed_no'];
 			$order->state 		= 1;
 			$order->add_time	= time();
 
-			$temp = [];
-			foreach ( $param['product'] as $k=>$v) {
-				$vv = explode('_',$v);
-				$temp[] =  [
-					$vv[0],
-					$vv[1],
-					$param['num'][$k],
-					$vv[2],
-					$vv[3],
-					$vv[4],
-				 ];
-
-				$product = Product::get([ 'sn' => $vv[0] ]);
-				$product->num +=  $param['num'][$k];
-				$product->save();
-			}
-			$order->res = json_encode( $temp );
-			// dump( $order->res );
-			// $order->res 		= $param['res'];
-			// die();
-
 			// 检测错误
 			if( $order->save() ){
+				$id = $order->id;
+				//插入并更新
+				$this->addList($param,$id);
+
 				return ['error'	=>	0,'msg'	=>	'保存成功'];
 			}else{
 				return ['error'	=>	100,'msg'	=>	'保存失败'];	
@@ -74,40 +61,31 @@ class InstorageService
 
     }
 
+    //插入列表
+    public function addList($data,$order_id){
 
-    public function edit($id){
-    	return Order::get($id);
+    	foreach ($data['product'] as $k=>$v) {
+
+    		//id更新产品数量
+			$product = Product::get($v);
+			$product->num +=  $data['num'][$k];
+			$product->save();
+
+
+			//添加到订单列表
+			OrderList::create([
+				'good_id'	=>	$v,
+				'order_id'	=>	$order_id,
+				'num'		=>	$data['num'][$k]
+			]);
+    	}
+
     }
 
-
-    public function update(){
-    	Request::instance()->isPost() || die('request not  post!');
-    	
-		$param = Request::instance()->param();	//获取参数
-		$error = $this->_validate($param); 		// 是否通过验证
-
-		if( is_null( $error ) ){
-
-			$order = Order::get($param['id']);
-			$order->sn 			= $param['sn'];
-			$order->res 		= $param['res'];
-			$order->type 		= $param['type'];
-			$order->desc 		= $param['desc'];
-			$order->author 		= $param['author'];
-			$order->supplier 	= $param['supplier'];
-			$order->state 		= 1;
-
-			// 检测错误
-			if( $order->save() ){
-				return ['error'	=>	0,'msg'	=>	'修改成功'];
-			}else{
-				return ['error'	=>	100,'msg'	=>	'修改失败'];	
-			}
-		}else{
-			return ['error'	=>	100,'msg'	=>	$error];
-		}
-
-
+    public function getAllList($id){
+    	return OrderList::All([
+    		'order_id'	=> $id
+    	]);
     }
 
     public function delete($id){

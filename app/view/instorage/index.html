@@ -59,7 +59,7 @@
 
                     <div class="btn-group dropdown-btn-group pull-right">
                         
-                        <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">过滤某列数据
+<!--                         <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">过滤某列数据
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -73,7 +73,7 @@
                                 </div>
                                 <label for="toggle-id916bcee584545-col-1">用户名</label>
                             </li>
-                        </ul>
+                        </ul> -->
                         <button class="btn btn-default" onClick ="$('.table').tableExport({formats:['xlsx','xls','csv','txt']})">导出</button>
                     </div>                    
 
@@ -135,6 +135,7 @@
                                 null,
                                 null,
                                 null,
+                                null,
                                 {bSortable: false}
                             ],
                         });
@@ -176,6 +177,7 @@
                                 <th>编号</th>
                                 <th>制单者</th>
                                 <th>供应商</th>
+                                <th>车牌</th>
                                 <th>入库类型</th>
                                 <th>创建时间</th>
                                 <th>操作</th>
@@ -186,12 +188,13 @@
                         
                         {volist name='list' id='vo'}
                             <tr>
-                                <td>
-                                    <input type="checkbox" class="cbr">
-                                </td>
+                            <td>
+                                <input type="checkbox" class="cbr">
+                            </td>
                                 <td> {$vo.sn} </td>
                                 <td> {$vo.author} </td>
                                 <td> {$vo.supplier} </td>
+                                <td> {$vo.car_no} </td>
                                 <td> {$vo.type} </td>
                                 <td> {:date('Y-m-d H:i:s',$vo->add_time)} </td>
                                 <td>
@@ -225,7 +228,7 @@
                             <div class="dataTables_info" id="example-3_info" role="status" aria-live="polite"> 共{:count( $list ) } 行数据</div></div>
                         <div class="col-xs-6">
                             <div class="dataTables_paginate paging_simple_numbers" id="example-3_paginate">
-
+                                {$list->render()}
                             </div>
                         </div>
                     </div>                  

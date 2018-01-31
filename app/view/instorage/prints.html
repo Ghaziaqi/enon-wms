@@ -83,40 +83,53 @@
                             </tr>
                         </thead>
                         <tbody>
-                        <?php 
-                            $lists = json_decode($info->res);
-                        ?>
-
-                             <?php foreach( $lists as  $v ): ?>
-
+<?php
+    $countMoney = 0;
+?>
+{volist name='list' id='vo'}
                                 <tr role="row" class="odd">
                                     <td>
-                                        <label class="control-label">{$v[1]}</label>
+                                        <label class="control-label">{$vo.findGood.name}</label>
                                     </td>
                                     <td> 
-                                        <label class="control-label">{$v[0]}</label>
+                                        <label class="control-label">{$vo.findGood.sn}</label>
                                     </td>
                                     <td>
-                                        <label class="control-label">{$v[2]}</label>
+                                        <label class="control-label">{$vo.num}</label>
                                     </td>                                    
                                     <td>
-                                        <label class="control-label">{$v[3]}</label>
+                                        <label class="control-label">{$vo.findGood.price}</label>
                                     </td>
                                     <td>
-                                        <label class="control-label">{$v[4]}</label>
+                                        <label class="control-label">{$vo.findGood.storage}</label>
                                     </td>
                                     <td>
-                                        <label class="control-label">{$v[5]}</label>
+                                        <label class="control-label">{$vo.findGood.unit}</label>
                                     </td>
                                     <td>
-                                        <label class="control-label">{$v[2]*$v[3]}</label>
+                                        <label class="control-label">{$vo.num*$vo.findGood.price}.0</label>
                                     </td>
                                 </tr>
-                             <?php endforeach; ?>
+                                <input type="hidden" value="{$money=$vo.findGood.price}">
+                                
+                                <?php
+                                    $countMoney += $vo->num*$money;
+                                ?>
+{/volist}
+
                         </tbody>
                     </table>
 
-                    <div class="row">
+                    <div class="row" style="margin-top:15px;">
+                        <div class="col-md-12">
+                            <div class="form-group no-margin pull-right">
+                                <label class="control-label">总额</label>
+                                <label class="control-label">{$countMoney}.0</label>
+                            </div>  
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:20px;">
                         <div class="col-md-12">
                             <div class="form-group no-margin">
                                 <label class="control-label">备注</label>
@@ -124,14 +137,6 @@
                             </div>  
                         </div>
                     </div>
-                    
-<!--                     <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group no-margin">
-                                <input type="button" class="control-label" onclick="p()">
-                            </div>  
-                        </div>
-                    </div> -->
 
             </div>
         </div>

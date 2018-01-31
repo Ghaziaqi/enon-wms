@@ -37,8 +37,8 @@ if( isset($_POST['host']) ){
 	file_put_contents('./app/database.php','<?php return '.var_export($_dbConfig,true).';' );
 
 
-	die( '<center style="margin-top:150px;">
-		安装成功
+	die( '<center style="margin-top:150px;padding:15px;">
+		<h1>安装成功</h1>
 		<a href="http://'.$_POST['host'].$_POST['dir'].'/index.php">立即访问</a>
 	<center>' );
 }

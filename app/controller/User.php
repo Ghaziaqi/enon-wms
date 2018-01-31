@@ -13,11 +13,36 @@ class User extends Base
 
     public function index()
     {
+        $this->assign($this->service->getVar());
 		$this->assign(['list'	=>	$this->service->page()]);
         return view();
     }
 
-    public function getList(){
-    	return [];
+    public function create()
+    {
+        $this->assign($this->service->getVar());
+        return view();
     }
+
+
+    public function save()
+    {
+        return $this->service->save();
+    }
+
+    public function edit($id)
+    {
+        $this->assign($this->service->getVar());
+        $this->assign(['info' => $this->service->edit($id)]);   
+        return view();
+    }
+
+    public function update(){
+        return $this->service->update();
+    }
+
+    public function delete($id){
+        return $this->service->delete($id);
+    }
+
 }

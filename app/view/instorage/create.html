@@ -16,8 +16,8 @@
     <div class="row">   
         <div class="col-md-4">
             <div class="form-group">
-                <label for="field-2" class="control-label">制单人</label>
-                <input type="text" class="form-control" name="author" placeholder="制单人" value="{$my_info->truename}">
+                <label for="field-2" class="control-label">操作员</label>
+                <input type="text" class="form-control" name="author" placeholder="操作员" value="{$my_info->truename}">
             </div>  
         </div>
         <div class="col-md-4">
@@ -38,6 +38,27 @@
                         <option value="{$vo.name}">{$vo.name}</option>
                         {/volist}
                 </select>  
+            </div>
+        </div>        
+    </div>
+
+    <div class="row">   
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="field-2" class="control-label">车牌</label>
+                <input type="text" class="form-control" name="car_no" placeholder="车牌" value="">
+            </div>  
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">载货清单号</label>
+                <input type="text" class="form-control" name="detailed_no" placeholder="载货清单号" value="">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">板序号</label>
+                <input type="text" class="form-control" name="ban_no" placeholder="板序号" value="">
             </div>
         </div>        
     </div>
@@ -64,7 +85,7 @@
                 <td> 
                     <select name="product[]" class="form-control">
                         {volist name='product' id='vo'}
-                        <option value="{$vo.sn}_{$vo.name}_{$vo.price}_{$vo.storage}_{$vo.unit}">{$vo.name}</option>
+                        <option value="{$vo.id}">{$vo.name}</option>
                         {/volist}
                     </select> 
                 </td>

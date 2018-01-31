@@ -32,9 +32,8 @@ class Outstorage extends Base
     public function show($id)
     {
         $this->assign([
-            'product'    =>  Product::all(  [ 'status' => 0 ] ),
-            'supplier'   =>  Supplier::all(  [ 'status' => 0 ] ),
             'info'       =>  Order::get(['id'=>$id]),
+            'list'  => $this->service->getAllList($id)
         ]);
         return view();
     }
@@ -61,9 +60,8 @@ class Outstorage extends Base
     public function prints($id)
     {
         $this->assign([
-            'product'    =>  Product::all(  [ 'status' => 0 ] ),
-            'supplier'   =>  Supplier::all(  [ 'status' => 0 ] ),
-            'info'       =>  Order::get(['id'=>$id]),
+            'info'  =>  Order::get($id),
+            'list'  => $this->service->getAllList($id)
         ]);
         return view();
     }

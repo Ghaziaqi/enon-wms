@@ -76,4 +76,5 @@ class Barcode {
 		imageDestroy($barcode);
 		exit;
 	} // function code39
+	
 } // class barcode
