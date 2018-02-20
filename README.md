@@ -2,6 +2,11 @@
 
 ## 仓库管理系统beta版
 
+## 默认分支
+
+https://github.com/bool1993/xenon-wms
+
+
 #安装
 	
 	localhost/install.php
