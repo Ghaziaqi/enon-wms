@@ -1,6 +1,15 @@
 # xenon-wms
 
-## 仓库管理系统beta版
+## 仓库管理系统
+
+## 在线地址 
+
+http://bool.yk.0zj.pw/index.php
+
+普通账号： admin/admin   
+
+管理员账号：bool/admin
+
 
 ## 默认分支
 
