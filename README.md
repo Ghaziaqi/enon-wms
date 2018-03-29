@@ -20,7 +20,7 @@ https://github.com/bool1993/xenon-wms
 	
 	localhost/install.php
 
-#安装框架核心 vendor
+#安装框架核心 vendor (可以跳过)
 
 	composer install
 
