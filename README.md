@@ -46,6 +46,10 @@ ThinkPHP 5.1wms仓库管理系统
 
 > 系统的运行环境要求PHP5.6以上。
 
+在线手册：
+    
+    1，sql在根目录wms.sql
+    2.其他功能开发中
 ## qq群：785794314
 
 <div  align="center">    
