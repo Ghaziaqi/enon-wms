@@ -53,7 +53,7 @@ ThinkPHP 5.1wms仓库管理系统
 ## qq群：785794314
 
 <div  align="center">    
-  <img src="./demo/qq.png" width = "400" alt="图片名称" align=center />
+  <img src="./demo/qq.png" width = "200" alt="图片名称" align=center />
 </div>
 
 
