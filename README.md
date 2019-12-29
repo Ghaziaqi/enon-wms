@@ -25,6 +25,17 @@ http://148.70.120.105:8002/login/index
 
 https://github.com/bool1993/xenon-wms -->
 
+## 桌面版下载  (.exe)
+==注: 暂时只提供windows版 下载==
+
+网盘 | 地址 | 密码 
+---|---|---
+90网盘 | https://www.90pan.com/b1586379 | e717
+
+城通网盘 | https://t00y.com/file/23130714-415442373 | 396180
+
+
+
 
 ThinkPHP 5.1wms仓库管理系统
 ==============================
