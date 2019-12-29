@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Xenon Boostrap Admin Panel" />
+	<meta name="author" content="" />
+	
+	<title>后台管理</title>
+				
+	<!-- css  -->
+	{include file="common/css" /}
+	<!-- css  -->
+	
+</head>
+<body >
+<div class="app-page-root" >
+
+
+<!-- main -->
+
+    <!-- bootstrap-table工具栏 -->
+    <div class="row" style="display: none;">
+        <!-- 工具栏 -->
+        <div class="" id="toolbar">
+            <button type="button" class="btn btn-sm btn-info" onclick="showAjaxModal();">
+                <i class="fa fa-plus"></i>
+                <span class="hidden-xs">添 加</span>
+            </button>
+            <button type="button" class="btn btn-sm btn-danger hidden-xs" onclick="ajaxDels()">
+                <i class="fa fa-trash"></i>
+                <span class="hidden-xs">删 除</span>
+            </button>
+        </div>	
+    </div>
+
+
+
+
+
+    <!-- 列表内容 -->
+	<div class="col-md-12">
+
+
+		<section class="panel">
+			<header class="panel-heading">  
+				<h3 class="panel-title">计量单位</h3>
+				<div class="panel-options">
+					<a href="#" data-toggle="panel">
+						<span class="collapse-icon">–</span>
+						<span class="expand-icon">+</span>
+					</a>
+				</div>
+			</header>
+			<div class="panel-body">
+                
+<!-- 
+                <form class="form-inline form-search" role="form">
+					<span>
+						<label class="control-label">员工名称</label>
+						<input type="text" class="form-control" placeholder="员工名称" name="truename" value="">
+					</span>
+	
+					<span style="margin-left: 15px;">
+						<label class="control-label">员工编号</label>
+						<input type="text" class="form-control" placeholder="员工编号" name="sn" value="">
+					</span>
+	
+					<span style="margin-left: 15px;">
+						<label class="control-label">员工状态</label>
+						<select class="form-control" name="status">
+							<option value="">全部</option> 
+							<option value="0">正常 </option> 
+							<option value="1">废弃 </option>
+						</select> 
+					</span> 
+	
+					<span style="margin-left: 15px;">
+						<button class="btn btn-default btn-secondary" type="submit" style="margin-top:10px;">
+							<span class="fa-search"></span> 搜 索
+						</button>
+					</span>
+	
+				</form>
+ -->
+
+
+                <!-- 表格 -->
+				<div class="">
+					<table class="table table-hover table-striped table-bordered dataTable  " id="table"> </table>
+				</div>
+
+			</div>
+	
+		</section>
+
+
+
+
+
+	<!-- 添加的 模态框 -->
+	<div class="modal fade" id="modal-save">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">添加</h4>
+				</div>
+				
+				<div class="modal-body">
+					Content is loading...
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<button type="button" class="btn btn-info" onclick="AjaxSave()">确定</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+	</div>
+    <!-- 列表内容 -->
+
+</div>	
+<!-- Bottom Scripts -->
+<!-- js  -->
+{include file="common/js" /}
+{include file="common/bootstrap-table" /}
+<!-- js  -->
+
+</body>
+</html>
+<script>
+
+ // 表格数据
+ var table_config = {
+     url: "{:url('index')}",//请求后台的URL（*）
+     method: 'GET',                      //请求方式（*）
+     toolbar: '#toolbar',                //工具按钮用哪个容器
+     striped: true,                      //是否显示行间隔色
+     cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+     sortable: true,                     //是否启用排序
+     sortOrder: "asc",                   //排序方式
+     pagination: true,                   //是否显示分页（*）
+     sidePagination: "server",           //分页方式：client 客户端分页，server 服务端分页（*）
+     pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+     pageSize: 10,                       //每页的记录行数（*）
+     pageList: [5, 10, 20, 50, 100],     //可供选择的每页的行数（*）
+     search: false, //是否显示表格搜索
+     strictSearch: false,
+     searchOnEnterKey: true,
+ 
+     showPrint: true,    //打印
+     showJumpto: true, //分页跳转
+     
+     // copyBtn: true,  //复制
+ 
+     showExport: true, 
+     exportDataType: "basic",              //basic', 'all', 'selected'
+     // 'json', 'xml', 'png', 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf','powerpoint'
+     exportTypes: ['csv', 'xlsx', 'excel', 'doc', 'png', 'sql', 'json', 'xml', 'txt' ],
+     exportOptions:{
+         ignoreColumn: [0,-1],  //忽略某一列的索引
+         // ignoreRow: [0,1],
+         fileName: '文件名',  //文件名称设置
+         worksheetName: 'sheet1',  //表格工作区名称
+         tableName: '文件名',
+         excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+         jsonScope: 'all',
+         csvEnclosure: '"',
+         csvSeparator: ',',
+         csvUseBOM: true,
+         displayTableName: false,
+         escape: false,
+         exportHiddenCells: false,
+     },
+ 
+     showColumns: true,                  //是否显示所有的列（选择显示的列）
+     showRefresh: true,                  //是否显示刷新按钮
+     minimumCountColumns: 2,             //最少允许的列数
+     clickToSelect: true,                //是否启用点击选中行
+     // uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+     showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+     cardView: false,                    //是否显示详细视图
+     detailView: false,                  //是否显示父子表
+     checkboxHeader: true,               //设置 false 将在列头隐藏全选复选框
+     buttonsClass: 'default',
+     iconSize: 'md',
+     iconsPrefix: 'fa',
+ 
+     icons: {
+         refresh: 'fa-refresh',
+         export: 'fa-download',
+         toggle: 'fa-columns',
+         columns: 'fa-list-ul',
+         print: 'fa-print',
+     },
+ 
+     //得到查询的参数
+     queryParams : function (params) {
+         //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+         var data = $(".form-search").serializeArray();
+         var temp = {   
+             rows: params.limit,                         //页面大小
+             page: (params.offset / params.limit) + 1,   //页码
+             sort: params.sort,      //排序列名  
+             sortOrder: params.order, //排位命令（desc，asc）
+             // data: arrayToJson(data),
+             keyword: params.search
+         };
+         return temp;
+     },
+     columns: [
+         {
+             checkbox: true,  
+             visible: true,
+             valign: 'middle',
+             printIgnore: true
+         }, 
+         {
+             field: 'id',
+             title: 'ID',
+             valign: 'middle',
+             sortable: true
+         },
+         {
+             field: 'sn',
+             title: '编号',
+             valign: 'middle',
+             sortable: true
+         },
+         {
+             field: 'name',
+             title: '名称',
+             valign: 'middle',
+             sortable: true
+         },
+         {
+             field: 'status',
+             title: '状态',
+             valign: 'middle',
+             formatter: formatter.status,
+             sortable: true,
+             class: "hidden-xs hidden-sm"
+         },
+         {
+             field: 'create_time',
+             title: '创建时间',
+             sortable: true,
+             valign: 'middle',
+             formatter: formatter.time,
+             printIgnore: true
+         },
+         {
+             field: 'id',
+             title: '操作',
+             align: 'center',
+             valign: 'middle',
+             formatter: function(value, row, index){
+ 
+                 return `
+                 <button class="btn btn-sm btn-success mg-r-xs" type="button" title="edit" onclick="showAjaxModal(${value})">
+                     <i class="fa fa-edit"> </i>
+                     <span class="hidden-xs hidden-sm">编辑</span>
+                 </button>
+                 <button class="btn btn-sm btn-danger" type="button" title="delete" onclick="ajaxDelete(${value})">
+                     <i class="fa fa-trash"> </i>
+                     <span class="hidden-xs hidden-sm">删除</span>
+                 </button>`;
+ 
+             },
+             printIgnore: true
+         }
+      ],
+     onLoadSuccess: function () {
+         // console.log("数据加载完毕！");
+     },
+     onLoadError: function () {
+         toastr.error( "数据加载失败！" );
+     },
+     // 双击编辑
+     onDblClickRow: function (row, $element) {
+         // console.log(row);
+     },
+ };
+ 
+//  创建表格
+ var table = $('#table').bootstrapTable(table_config);
+
+
+//  显示创建窗口
+function showAjaxModal(id=false)
+{
+    $('#modal-save').modal('show', {backdrop: 'static'});
+    // 判断是否传入了id
+    if( id == false ){
+        $('#modal-save .modal-title' ).text('添加');
+        $.ajax({
+            url: "{:url('create')}",
+            success: function(response){
+                $('#modal-save .modal-body').html(response);
+            }
+        });
+    }else{
+        $('#modal-save .modal-title' ).text('编辑');
+        $.ajax({
+            url: "{:url('edit')}?id="+id,
+            success: function(response){
+                $('#modal-save .modal-body').html(response);
+            }
+        });
+    }
+
+}
+
+// 创建数据
+function AjaxSave(){
+    var submit_url = $(".form-save").attr('action');
+    var data = $(".form-save").serializeArray();
+    // console.log(data);
+    $.post( submit_url, data,function(resp){
+     if(resp.error == 0){
+        toastr.success(resp.msg);
+        // 关闭模态框
+        $('#modal-save').modal('hide');
+        // 刷新表格
+        table.bootstrapTable('refresh');
+     }else{
+        toastr.error(resp.msg);
+     }
+    }, "json");
+
+}
+
+// 删除数据
+function ajaxDelete(id){
+
+    //询问框
+    layer.confirm('你是否真的要删除', function(){
+        $.post( "{:url('delete')}?id="+id, {},function(resp){
+        if(resp.error == 0){
+            toastr.success(resp.msg);
+            // 刷新表格
+            table.bootstrapTable('refresh');
+            layer.closeAll();
+        }else{
+            toastr.error(resp.msg);
+        }
+        }, "json");
+    });
+
+}
+
+// 批量删除
+function ajaxDels(){
+    
+    var res= table.bootstrapTable('getSelections');
+    // 判断是否有选中的行数
+    if( res.length > 0 ){
+        var ids = res.map(function(v) {
+            return v.id;
+        });
+        
+        // 弹出确认框
+        layer.confirm('你确定要删除'+res.length+'条数据吗？', function(index){
+            $.post("{:url('delete')}", {id: ids}, function(resp) {
+                if(resp.error == 0){
+                    toastr.success(resp.msg);
+                    // 刷新表格
+                    table.bootstrapTable('refresh');
+                    layer.close(index);
+                }else{
+                    toastr.error(resp.msg);
+                }
+            });  
+        });
+
+    }else{
+        layer.msg('请选中一行');
+    }
+
+}
+
+</script>

@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Xenon Boostrap Admin Panel" />
+	<meta name="author" content="" />
+	
+	<title>后台管理</title>
+				
+	<!-- css  -->
+	{include file="common/css" /}
+	<!-- css  -->
+	
+</head>
+<body >
+<div class="app-page-root" >
+
+	<!-- title -->
+	<!-- <div class="page-title">
+		<div class="breadcrumb-env pull-left">
+			<ol class="breadcrumb bc-1">
+				<li>
+					<a href="/user/index"><i class="fa-home"></i>首页</a>
+				</li>
+				<li>
+					<a href="">基本设置</a>
+				</li>
+				<li class="active">
+					<strong>角色管理</strong>
+				</li>
+			</ol>
+		</div>
+	</div> -->
+
+<!-- main -->
+
+		<!-- bootstrap-table工具栏 -->
+		<div class="row" style="display: none;">
+			<!-- 工具栏 -->
+			<div class="" id="toolbar">
+				<button type="button" class="btn btn-sm btn-info" onclick="Table.methods.add()">
+					<i class="fa fa-plus"></i>
+					<span class="hidden-xs">添 加</span>
+				</button>
+				<button type="button" class="btn btn-sm btn-danger hidden-xs" onclick="Table.methods.dels()">
+					<i class="fa fa-trash"></i>
+					<span class="hidden-xs">删 除</span>
+				</button>
+			</div>
+			
+		</div>
+
+
+
+	<div class="col-md-12">
+
+
+		<section class="panel">
+			<header class="panel-heading">  
+				<h3 class="panel-title">
+					查询
+				</h3>
+				<div class="panel-options">
+					<a href="#" data-toggle="panel">
+						<span class="collapse-icon">–</span>
+						<span class="expand-icon">+</span>
+					</a>
+				</div>
+			</header>
+			<div class="panel-body">
+
+                <form class="form-inline form-search" role="form">
+					<span>
+						<label class="control-label">员工名称</label>
+						<input type="text" class="form-control" placeholder="员工名称" name="truename" value="">
+					</span>
+	
+					<span style="margin-left: 15px;">
+						<label class="control-label">员工编号</label>
+						<input type="text" class="form-control" placeholder="员工编号" name="sn" value="">
+					</span>
+	
+					<span style="margin-left: 15px;">
+						<label class="control-label">员工状态</label>
+						<select class="form-control" name="status">
+							<option value="">全部</option> 
+							<option value="0">正常 </option> 
+							<option value="1">废弃 </option>
+						</select> 
+					</span> 
+	
+					<span style="margin-left: 15px;">
+						<button class="btn btn-default btn-secondary" type="submit" style="margin-top:10px;">
+							<span class="fa-search"></span> 搜 索
+						</button>
+					</span>
+	
+				</form>
+
+
+				<div class="">
+					<table class="table table-hover table-striped table-bordered dataTable  " id="table"> </table>
+				</div>
+
+
+			</div>
+	
+		</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+			
+
+		
+		
+</div>	
+<!-- Bottom Scripts -->
+<!-- js  -->
+{include file="common/js" /}
+<!-- js  -->
+
+
+<!-- bootstrap-table -->
+<link href="/static/admin/vendor/bootstrap-table/bootstrap-table.min.css" rel="stylesheet">
+<script src="/static/admin/vendor/bootstrap-table/bootstrap-table.min.js"></script>
+
+<!-- 汉化包 -->
+<script src="/static/admin/vendor/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+
+<!-- tableExport 导出插件 -->
+<script src="/static/admin/vendor/bootstrap-table/extensions/bootstrap-table-export.min.js"></script>
+<script src="/static/admin/vendor/bootstrap-table/extensions/tableExport/tableExport.min.js"></script>
+
+<!-- 导出插件 -->
+<script src="/static/admin/vendor/bootstrap-table/extensions/tableExport/libs/FileSaver/FileSaver.min.js"></script>
+<script src="/static/admin/vendor/bootstrap-table/extensions/tableExport/libs/js-xlsx/xlsx.core.min.js"></script>
+<script src="/static/admin/vendor/bootstrap-table/extensions/tableExport/libs/jsPDF/jspdf.min.js"></script>
+<script src="/static/admin/vendor/bootstrap-table/extensions/tableExport/libs/jsPDF-AutoTable/jspdf.plugin.autotable.js"></script>
+<script src="/static/admin/vendor/bootstrap-table/extensions/tableExport/libs/es6-promise/es6-promise.auto.min.js"></script>
+<script src="/static/admin/vendor/bootstrap-table/extensions/tableExport/libs/html2canvas/html2canvas.min.js"></script>
+
+<!-- 跳到指定页数 jumpto -->
+<link rel="stylesheet" href="/static/admin/vendor/bootstrap-table/extensions/page-jumpto/bootstrap-table-jumpto.css">
+<script src="/static/admin/vendor/bootstrap-table/extensions/page-jumpto/bootstrap-table-jumpto.js"></script>
+
+<!-- 打印插件 -->
+<script src="/static/admin/vendor/bootstrap-table/extensions/bootstrap-table-print.js"></script>
+
+<!-- moment.min.js -->
+<script src="/static/admin/vendor/moment.min.js"></script>
+</body>
+</html>
+<script>
+ var formatter = {
+     time: function(value, row, index){
+         if( value != null ){
+             value *= 1000;
+             return moment(value).format('YYYY-MM-DD HH:mm');  
+         }else{
+             return '-:-';
+         }
+     },
+     operate: function(value, row, index){
+         return '<button class="btn btn-sm btn-success mg-r-xs" type="button" onclick="Table.methods.edit(' + row.id + ')" ><i class="fa fa-edit" > </i><span class="hidden-xs hidden-sm">编辑</span></button><button class="btn btn-sm btn-danger" type="button" onclick="Table.methods.del(' + row.id + ')"><i class="fa fa-trash" > </i><span class="hidden-xs hidden-sm">删除</span></button>';
+     },
+     print: function(value, row, index){
+         return '<button class="btn btn-sm btn-primary mg-r-xs" type="button" onclick="Table.methods.print(' + row.id + ')" ><i class="fa fa-print" > </i><span class="hidden-xs hidden-sm">打印</span></button>  <button class="btn btn-sm btn-success mg-r-xs" type="button" onclick="Table.methods.edit(' + row.id + ')" ><i class="fa fa-edit" > </i><span class="hidden-xs hidden-sm">编辑</span></button><button class="btn btn-sm btn-danger" type="button" onclick="Table.methods.del(' + row.id + ')"><i class="fa fa-trash" > </i><span class="hidden-xs hidden-sm">删除</span></button>';        
+     },
+     img: function(value, row, index){
+         return ' <a href="'+value+'" target="_blank"> <img src="'+value+'" alt="" width="20" > </a> ';
+     },
+     file: function(value, row, index){
+         return '  <a href="'+value+'">查看</a>';
+     },
+     head_img: function(value, row, index){
+         if( value != null ){
+             return ' <a href="'+value+'" target="_blank"> <img src="'+value+'" alt="" width="20" > </a> ';
+         }else{
+             return ' <a href="" target="_blank"> <img src="/static/admin/img/about.png" alt="" width="20" > </a> ';
+         }
+     },
+     checkbox: function(value, row, index){
+         return '<label class="cr-styled"><input type="checkbox"><i class="fa"></i> </label>';
+     },
+     status: function (value, row, index){
+         return value == 0 ? '正常' : '禁用';
+     },
+     icon: function (value, row, index) {
+         return '<i class="fa ' + value + '"></i>'
+     }
+ 
+ };
+ 
+ // 表格数据
+ var table_config = {
+     url: "{:url('table')}",//请求后台的URL（*）
+     method: 'GET',                      //请求方式（*）
+     toolbar: '#toolbar',                //工具按钮用哪个容器
+     striped: true,                      //是否显示行间隔色
+     cache: false,                       //是否使用缓存，默认为true，所以一般情况下需要设置一下这个属性（*）
+     sortable: true,                     //是否启用排序
+     sortOrder: "asc",                   //排序方式
+     pagination: true,                   //是否显示分页（*）
+     sidePagination: "server",           //分页方式：client 客户端分页，server 服务端分页（*）
+     pageNumber: 1,                      //初始化加载第一页，默认第一页,并记录
+     pageSize: 10,                       //每页的记录行数（*）
+     pageList: [5, 10, 25, 50, 100],     //可供选择的每页的行数（*）
+     search: false, //是否显示表格搜索
+     strictSearch: false,
+     searchOnEnterKey: true,
+ 
+     showPrint: true,    //打印
+     showJumpto: true, //分页跳转
+     
+     // copyBtn: true,  //复制
+ 
+     showExport: true, 
+     exportDataType: "basic",              //basic', 'all', 'selected'
+     // 'json', 'xml', 'png', 'csv', 'txt', 'sql', 'doc', 'excel', 'xlsx', 'pdf','powerpoint'
+     exportTypes: ['csv', 'xlsx', 'excel', 'doc', 'png', 'sql', 'json', 'xml', 'txt' ],
+     exportOptions:{
+         ignoreColumn: [0,-1],  //忽略某一列的索引
+         // ignoreRow: [0,1],
+         fileName: '文件名',  //文件名称设置
+         worksheetName: 'sheet1',  //表格工作区名称
+         tableName: '文件名',
+         excelstyles: ['background-color', 'color', 'font-size', 'font-weight'],
+         jsonScope: 'all',
+         csvEnclosure: '"',
+         csvSeparator: ',',
+         csvUseBOM: true,
+         displayTableName: false,
+         escape: false,
+         exportHiddenCells: false,
+     },
+ 
+     showColumns: true,                  //是否显示所有的列（选择显示的列）
+     showRefresh: true,                  //是否显示刷新按钮
+     minimumCountColumns: 2,             //最少允许的列数
+     clickToSelect: true,                //是否启用点击选中行
+     // uniqueId: "ID",                     //每一行的唯一标识，一般为主键列
+     showToggle: true,                   //是否显示详细视图和列表视图的切换按钮
+     cardView: false,                    //是否显示详细视图
+     detailView: false,                  //是否显示父子表
+     checkboxHeader: true,               //设置 false 将在列头隐藏全选复选框
+     buttonsClass: 'default',
+     iconSize: 'md',
+     iconsPrefix: 'fa',
+ 
+     icons: {
+         refresh: 'fa-refresh',
+         export: 'fa-download',
+         toggle: 'fa-columns',
+         columns: 'fa-list-ul',
+         print: 'fa-print',
+     },
+ 
+     //得到查询的参数
+     queryParams : function (params) {
+         //这里的键的名字和控制器的变量名必须一致，这边改动，控制器也需要改成一样的
+         var data = $(".form-search").serializeArray();
+         var temp = {   
+             rows: params.limit,                         //页面大小
+             page: (params.offset / params.limit) + 1,   //页码
+             sort: params.sort,      //排序列名  
+             sortOrder: params.order, //排位命令（desc，asc）
+             // data: arrayToJson(data),
+             keyword: params.search
+         };
+         return temp;
+     },
+     columns: [
+         {
+             checkbox: true,  
+             visible: true,
+             valign: 'middle',
+             printIgnore: true
+         }, 
+         {
+             field: 'id',
+             title: 'ID',
+             valign: 'middle',
+             sortable: true
+         },
+         {
+             field: 'name',
+             title: '名称',
+             valign: 'middle',
+             sortable: true
+         },
+         {
+             field: 'create_time',
+             title: '创建时间',
+             sortable: true,
+             valign: 'middle',
+             formatter: formatter.time,
+             printIgnore: true
+         },
+         {
+             field: 'id',
+             title: '操作',
+             align: 'center',
+             valign: 'middle',
+             formatter: function(value, row, index){
+ 
+                 return `
+                 <button class="btn btn-sm btn-success mg-r-xs" type="button" title="edit">
+                     <i class="fa fa-edit"> </i>
+                     <span class="hidden-xs hidden-sm">编辑</span>
+                 </button>
+                 <button class="btn btn-sm btn-danger" type="button" title="delete">
+                     <i class="fa fa-trash"> </i>
+                     <span class="hidden-xs hidden-sm">删除</span>
+                 </button>`;
+ 
+             },
+             printIgnore: true
+         }
+      ],
+     onLoadSuccess: function () {
+         // console.log("数据加载完毕！");
+     },
+     onLoadError: function () {
+         toastr.error( "数据加载失败！" );
+     },
+     // 双击编辑
+     onDblClickRow: function (row, $element) {
+         // console.log(row);
+     },
+ };
+ 
+ var table = $('#table').bootstrapTable(table_config);
+</script>

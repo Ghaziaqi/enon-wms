@@ -1,0 +1,187 @@
+<form action="{:url('save')}" class="form-save">
+
+    <div class="row">
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label for="field-1" class="control-label">编号</label>
+                <input type="text" class="form-control" name="sn" placeholder="编号" value="{:strtoupper(uniqid())}">
+            </div>	
+            
+        </div>
+        
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label for="field-2" class="control-label">类型</label>
+                <select class="form-control" name="type" v-model="type">
+                    <option value="0">个人</option>
+                    <option value="1">企业</option>
+                </select>
+            </div>	
+        
+        </div>
+    </div>
+
+    <div class="row">
+        
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label for="field-5" class="control-label">联系人</label>
+                
+                <input type="text" class="form-control" name="contact" placeholder="联系人">
+            </div>	
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="field-6" class="control-label">手机号</label>
+                <input type="text" class="form-control" name="phone" placeholder="手机号">
+            </div>	
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label class="control-label">状态</label>
+                <select class="form-control" name="status">
+                    <option value="0">正常</option>
+                    <option value="1">禁用</option>
+                </select>
+            </div>	
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="field-6" class="control-label">邮箱</label>
+                <input type="text" class="form-control" name="email" placeholder="邮箱">
+            </div>	
+        </div>
+    </div>
+
+
+    <div class="row" v-show="type">
+        <div class="col-md-6" > 
+            <div class="form-group">
+                <label class="control-label">公司名称</label>
+                <input type="text" class="form-control" name="title" placeholder="公司名称">
+            </div>	
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <span>社会信用代码</span>
+                <input type="text" class="form-control" placeholder="社会信用代码" name="credit_id">
+            </div>	
+        </div>
+    </div>
+
+    <div class="row" v-show="type">
+        <div class="col-md-6" v-show="type"> 
+            <div class="form-group">
+                <label class="control-label">电话</label>
+                <input type="text" class="form-control" name="tel" placeholder="电话">
+            </div>	
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="field-6" class="control-label">纳税人识别号</label>
+                <input type="text" class="form-control" name="taxpayer_id" placeholder="纳税人识别号">
+            </div>	
+        </div>
+    </div>
+
+    <div class="row" v-show="type">
+        <div class="col-md-6" v-show="type"> 
+            <div class="form-group">
+                <label class="control-label">开户银行</label>
+                <select class="form-control bank" name="bank">
+                    <option :value="item" v-for="item in bank" v-text="item"></option>
+                </select>
+            </div>	
+        </div>
+        
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="field-6" class="control-label">开户卡号</label>
+                <input type="text" class="form-control" name="bank_number" placeholder="开户卡号">
+            </div>	
+        </div>
+    </div>
+
+    <div class="row" v-show="type">
+        <div class="col-md-12"> 
+            <div class="form-group">
+                <label class="control-label">开户行地址</label>
+                <input type="text" class="form-control" name="bank_address" placeholder="开户行地址">
+            </div>	
+        </div>
+    </div>
+
+
+    <div class="row" style="margin-bottom: 10px;">
+        <div class="col-md-12"> 
+            <div class="form-group">
+                <label class="control-label">地区</label>
+                <div data-toggle="distpicker" class="distpicker" >
+                    <select class="form-control col-md-4" style="width: auto;margin-right: 5px;" name="province" data-province=""></select>
+                    <select class="form-control col-md-4" style="width: auto;margin-right: 5px;" name="city" data-city=""></select>
+                    <select class="form-control col-md-4" style="width: auto;" name="district" data-district=""></select>
+                </div>
+            </div>	
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12"> 
+            <div class="form-group">
+                <label class="control-label">详细地址</label>
+                <input type="text" class="form-control" name="street" placeholder="详细地址">
+            </div>	
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            
+            <div class="form-group no-margin">
+                <label for="field-7" class="control-label">备注</label>
+                
+                <textarea class="form-control autogrow" name="remark" placeholder="备注"></textarea>
+            </div>	
+            
+        </div>
+    </div>
+
+</form>
+<script>
+// seajs
+seajs.use(['vendor/distpicker.min','vendor/bank','vendor/comboSelect/jquery.combo.select'], function() {
+    // vue
+    var create = new Vue({
+        el: '.form-save',
+        data: {
+            type: 0,
+            bank: bank_list
+        },
+        mounted: function (){
+            $(".distpicker").distpicker(); 
+            $('.bank').comboSelect();
+        },
+        methods: {
+
+        },
+        watch:{
+            type:function(newVal,oldVal){
+                this.type = (newVal == '1') ? 1 : 0;
+            }
+        }
+
+    });    
+        
+});
+
+</script>

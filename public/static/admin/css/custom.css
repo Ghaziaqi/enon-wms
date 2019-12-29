@@ -1,0 +1,29 @@
+/**
+ *
+ * Apply your custom CSS here
+ *
+*/
+
+
+iframe{
+    height: 100%;
+    width: 100%;
+    border-left:none;
+    border-right:none;
+    border-bottom:none;
+    border-top: none;
+}
+.iframe-main{
+    height: calc(100% - 82px);
+    width: 100%;
+    margin-top: 3px;
+    border: none;
+}
+.app-page-root{
+    padding: 15px 20px;
+}
+
+.form-search{
+    border-bottom: 2px solid #f5f5f5;
+    padding-bottom: 5px;
+}

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Xenon Boostrap Admin Panel" />
+	<meta name="author" content="" />
+	
+	<title>后台管理</title>
+				
+	<!-- css  -->
+	{include file="common/css" /}
+	<!-- css  -->
+	    <!-- comboSelect样式 -->
+        <link href="/static/admin/vendor/comboSelect/combo.select.css" rel="stylesheet">
+</head>
+<body >
+<div class="app-page-root" >
+
+
+    <!-- main begin -->
+    <div class="col-md-12">
+
+        <section class="panel">
+            <header class="panel-heading">  
+                <h3 class="panel-title">入库操作</h3>
+                <div class="panel-options">
+                    <a href="#" data-toggle="panel">
+                        <span class="collapse-icon">–</span>
+                        <span class="expand-icon">+</span>
+                    </a>
+                </div>
+            </header>
+            <div class="panel-body">
+            
+
+                <form action="{:url('save')}" class="form-save">
+
+                    <div class="row">
+                        <div class="col-md-2 ">
+                            
+                            <div class="form-group">
+                                <label for="field-1" class="control-label">编号</label>
+                                <input type="text" class="form-control" name="sn" placeholder="编号" value="{:strtoupper(uniqid())}">
+                            </div>	
+                            
+                        </div>
+                        <div class="col-md-2">
+                            
+                            <div class="form-group">
+                                <label for="field-2" class="control-label">操作人</label>
+                                <input type="text" class="form-control" name="author" placeholder="操作人">
+                            </div>	
+                        </div>
+                        <div class="col-md-2"> 
+                            <div class="form-group">
+                                <label class="control-label">入库类型</label>
+                                <select class="form-control" name="type">
+                                    <option value="1">采购入库</option>
+                                    <option value="2">退货入库</option>
+                                </select>
+                            </div>	
+                        </div>
+                        <div class="col-md-2"> 
+                            <div class="form-group">
+                                <label class="control-label">供应商</label>
+                                <select class="form-control comboSelect" name="supplier">
+                                    {volist name="supplier" id="vo"}
+                                    <option value="{$vo.id}">{$vo.title}</option>
+                                    {/volist}
+                                </select>
+                            </div>	
+                        </div>
+                        <div class="col-md-2"> 
+                            <div class="form-group">
+                                <label class="control-label">入库时间</label>
+                                <input type="text" class="form-control date-time" name="in_date" placeholder="入库时间" value="{:date('Y-m-d',time())}">
+                            </div>	
+                        </div>
+                    </div>
+
+
+                    <!-- 表格 -->
+                    <div class="">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr >
+                                    <th width="80">
+                                        <button class="btn btn-sm btn-success" type="button" @click="addLine">
+                                            <i class="fa fa-plus"> </i>
+                                            <span class="hidden-xs hidden-sm">新增</span>
+                                        </button>
+                                    </th>
+                                    <th width="220">编号</th>
+                                    <th>名称</th>
+                                    <th>品牌</th>
+                                    <th>型号</th>
+                                    <th width="200">价格</th>
+                                    <th width="200">数量</th>
+                                    <th>单位</th>
+                                    <th>合计</th>
+                                    <th width="80"></th>
+                                </tr >
+                            </thead>
+                            
+                            <tbody>
+
+                                <tr v-for="(item,key) in table">
+                                    <td>
+                                        <button class="btn btn-sm btn-info" type="button" @click="selectLine(key)" >
+                                            <!-- <i class="fa fa-plus"> </i> -->
+                                            <span class="hidden-xs hidden-sm">选择</span>
+                                        </button>
+                                        <input type="hidden" class="form-control" name="p_id[]" placeholder="id" v-model="item.id">
+                                        <input type="hidden" class="form-control" name="sum[]" placeholder="合计" v-model="item.count">
+                                    </td>
+                                    <td>
+                                        <input type="text" class="form-control" name="p_sn[]" placeholder="编号" v-model="item.sn">
+                                    </td>
+                                    <td v-text="item.name">--</td>
+                                    <td v-text="item.brand_name">--</td>
+                                    <td v-text="item.model">--</td>
+                                    <td @input="sumLine(key)">
+                                        <input type="text" class="form-control" name="price[]" placeholder="价格" v-model="item.price">
+                                    </td>
+                                    <td @input="sumLine(key)">
+                                        <input type="text" class="form-control" name="num[]" placeholder="数量" v-model="item.num">
+                                    </td>
+                                    <td  v-text="item.unit_name">个</td>
+                                    <td v-text="item.count"></td>
+                                    <td>
+                                        <button class="btn btn-sm btn-danger" type="button" @click="delLine(key)">
+                                            <i class="fa fa-trash"> </i>
+                                            <!-- <span class="hidden-xs hidden-sm">删除</span> -->
+                                        </button>
+                                    </td>
+                                </tr>
+
+                                <tr v-show="priceCount != 0">
+                                    <td colspan="7"></td>
+                                    <td colspan="1" style="text-align: right;">合计</td>
+                                    <td colspan="2">
+                                        <input type="hidden" v-model="priceCount" name="count">
+                                        <strong v-text="priceCount"></strong>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+
+                
+                </form>
+                
+
+
+
+                <div class="row">
+                    <div class="col-md-6 text-align"></div>
+                    <div class="col-md-6 text-align">
+                        <button class="btn btn-sm btn-info" type="button" @click="ajaxSave()" >
+                            <span class="hidden-xs hidden-sm">提交</span>
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </section>
+
+
+
+    </div>
+    <!-- main end -->
+
+
+	<!-- 添加的 模态框 -->
+	<div class="modal fade" id="modal-select">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+					<h4 class="modal-title">选择</h4>
+				</div>
+				
+				<div class="modal-body">
+					Content is loading...
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+					<!-- <button type="button" class="btn btn-info" onclick="AjaxSave()">确定</button> -->
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+</div>	
+<!-- Bottom Scripts -->
+<!-- js  -->
+{include file="common/js" /}
+<!-- js  -->
+
+</body>
+</html>
+<script>
+var create = {};
+var select_ids = [];
+
+// seajs
+seajs.use(['vendor/comboSelect/jquery.combo.select','vendor/laydate/laydate'], function() {
+
+    // vue
+    create = new Vue({
+        el: '.app-page-root',
+        data: {
+            table: [{}],
+            currentIndex:0,
+            priceCount: 0
+        },
+        mounted: function (){
+            $('.comboSelect').comboSelect();
+            laydate.render({elem: '.date-time'});
+        },
+        methods: {
+            addLine: function(){
+                if( this.table.length >= 10 ){
+                    toastr.error("不能超过10行");
+                    return false;
+                }
+                this.table.push({});
+            },
+            selectLine: function(key){
+                this.currentIndex = key;
+                $('#modal-select').modal('show', {backdrop: 'static'});
+                $.ajax({
+                    url: "{:url('select')}",
+                    success: function(response){
+                        $('#modal-select .modal-body').html(response);
+                    }
+                });
+            },
+            sumLine: function(key){
+                this.table[key].price = parseFloat(this.table[key].price);
+                this.table[key].num = parseInt(this.table[key].num);
+
+                if(!this.table[key].price){
+                    this.table[key].price = 0;
+                    return false;
+                }
+                if(!this.table[key].num){
+                    this.table[key].num = 0;
+                    return false;
+                }
+
+                this.table[key].count = this.table[key].price*this.table[key].num;
+                this.sumPriceCount();
+            },
+            delLine: function(key){
+                this.table.splice(key,1);
+            },
+            setLine: function(key,data){
+                var temp = this.table;
+                this.table = [];
+                temp[key] = data;
+                this.table = temp;
+            },
+            sumPriceCount:function(){
+                var that = this;
+                that.priceCount = 0;
+                this.table.forEach((v,k) => {
+                    if( v.count ){
+                        that.priceCount += v.count
+                    }
+                });
+            },
+            selectIds: function(){
+                select_ids = [];
+                this.table.forEach((v,k) => {
+                    if( v.id ){
+                        select_ids.push(v.id)
+                    }
+                });
+            },
+            ajaxSave: function(){
+                var data = $(".form-save").serializeArray();
+               
+                $.post( "{:url('save')}", data,function(resp){
+                    if(resp.error == 0){
+                        toastr.success(resp.msg);
+                        setTimeout(function(){
+                            window.location.href="{:url('index')}";
+                        },2000);
+                    }else{
+                        toastr.error(resp.msg);
+                    }
+                }, "json");
+            }
+        },
+        watch:{
+            table(val, oldVal){
+                this.selectIds();
+                // console.log(val);
+                // this.sumPriceCount();
+            }
+        }
+
+    }); 
+
+
+});
+</script>

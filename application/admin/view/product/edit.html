@@ -1,0 +1,208 @@
+<form action="{:url('update')}" class="form-save">
+
+    <input type="hidden" class="form-control" name="id" placeholder="编号" value="{$row.id}">
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="field-1" class="control-label">编号</label>
+                <input type="text" class="form-control" name="sn" placeholder="编号" value="{$row.sn}" disabled="true">
+            </div>	
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label for="field-1" class="control-label">厂家编号</label>
+                <input type="text" class="form-control" name="cjsn" placeholder="厂家编号" value="{$row.cjsn}">
+            </div>	
+        </div> 
+    </div>
+
+    <div class="row">
+
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label for="field-2" class="control-label">名称</label>
+                <input type="text" class="form-control" name="name" placeholder="名称" value="{$row.name}">
+            </div>	
+        </div>
+
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label class="control-label">分类</label>
+                <select class="form-control comboSelect" name="cate" v-model="cate">
+                    {volist name="cate" id="vo"}
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    {/volist}
+                </select>
+            </div>	
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label class="control-label">品牌</label>
+                <select class="form-control comboSelect" name="brand" v-model="brand">
+                    {volist name="brand" id="vo"}
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    {/volist}
+                </select>
+            </div>	
+        </div>
+
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label for="field-2" class="control-label">型号</label>
+                <input type="text" class="form-control" name="model" placeholder="型号" value="{$row.model}">
+            </div>	
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="field-2" class="control-label">规格</label>
+                    <input type="text" class="form-control" name="spec" placeholder="规格" value="{$row.spec}">
+                </div>	
+            </div>	
+        </div>
+
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label for="field-2" class="control-label">颜色</label>
+                <input type="text" class="form-control" name="color" placeholder="颜色" value="{$row.color}">
+            </div>	
+        </div>
+
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="field-2" class="control-label">默认价格</label>
+                    <input type="text" class="form-control" name="price" placeholder="默认价格" value="{$row.price}">
+                </div>	
+            </div>	
+        </div>
+
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label for="field-2" class="control-label">单位</label>
+                <select class="form-control comboSelect" name="unit" v-model="unit">
+                    {volist name="unit" id="vo"}
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    {/volist}
+                </select>
+            </div>	
+        </div>
+
+    </div>
+
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="field-2" class="control-label">默认供应商</label>
+                    <select class="form-control comboSelect" name="supplier" v-model="supplier">
+                        {volist name="supplier" id="vo"}
+                        <option value="{$vo.id}">{$vo.title}</option>
+                        {/volist}
+                    </select>
+                </div>	
+            </div>	
+        </div>
+
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label for="field-2" class="control-label">默认客户</label>
+                <select class="form-control comboSelect" name="customer" v-model="customer">
+                    {volist name="customer" id="vo"}
+                    <option value="{$vo.id}">{$vo.type == 0 ? $vo.contact : $vo.title }</option>
+                    {/volist}
+                </select>
+            </div>	
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label class="control-label">默认库区</label>
+                <select class="form-control comboSelect" name="location" v-model="location">
+                    {volist name="location" id="vo"}
+                    <option value="{$vo.id}">{$vo.name}</option>
+                    {/volist}
+                </select>
+            </div>	
+        </div>
+
+        <div class="col-md-6"> 
+            <div class="form-group">
+                <label class="control-label">状态</label>
+                <select class="form-control" name="status">
+                    <option value="0" {:$row['status'] == 0 ? ' selected="true" ' : null } >正常</option>
+                    <option value="1" {:$row['status'] == 1 ? ' selected="true" ' : null } >禁用</option>
+                </select>
+            </div>	
+        </div>
+
+    </div>
+
+
+
+    <div class="row">
+        <div class="col-md-12">
+            
+            <div class="form-group no-margin">
+                <label for="field-7" class="control-label">备注</label>
+                
+                <textarea class="form-control autogrow" name="remark" placeholder="备注"></textarea>
+            </div>	
+            
+        </div>
+    </div>
+
+
+
+
+
+</form>
+<script>
+    // seajs
+    seajs.use(['vendor/comboSelect/jquery.combo.select'], function() {
+        // vue
+        var create = new Vue({
+            el: '.form-save',
+            data: {
+                cate: {$row.cate},
+                brand: {$row.brand},
+                unit: {$row.unit},
+                supplier: {$row.supplier},
+                customer: {$row.customer},
+                location: {$row.location}
+            },
+            mounted: function (){
+                $('.comboSelect').comboSelect();
+            },
+            methods: {
+    
+            },
+            watch:{
+                type:function(newVal,oldVal){
+                    this.type = (newVal == '1') ? 1 : 0;
+                }
+            }
+    
+        });    
+            
+    });
+    </script>
